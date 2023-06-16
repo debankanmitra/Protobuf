@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+import "protocol buffer/cars.proto"; // importing types or messages
+package person;
+
+message Person {
+    int32 age = 1;
+    string firstname = 2; 
+    string lastname = 3;
+    bytes small_picture = 4; 
+    bool profile_verified = 5;
+    float height = 6;
+    repeated string friends = 7 ; // repeated is used for list or an array 
+    Birthdate day = 8; //Birthdate type is defined on the same file 
+    message Adress { // Nesting mesasges
+        string adress_line_1 = 1;
+        string adress_line_2 = 2;
+        string zip_code = 3;
+        string city = 4;
+    }
+
+    repeated Adress adress = 9;
+
+    cars car = 10;
+    cars.house.houses house = 11;  // adding packages allow us for precise naming conventions
+}
+
+// Defining Multiple Messages in the Same File
+message Birthdate {
+    int32 year = 1;
+    int32 month = 2;
+    int32 day = 3;
+
+}
