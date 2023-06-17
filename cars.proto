@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package cars.house;
+
+message cars {
+    string models = 1;
+}
+
+message houses {
+    string models = 1;
+}
