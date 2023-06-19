@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"log"
@@ -10,6 +11,24 @@ import (
 	"google.golang.org/grpc"
 )
 
+type server struct {
+	gtpb.UnimplementedGreetServiceServer
+}
+
+//var s gtpb.GreetServiceServer
+
+func (*server) Greet(ctx context.Context, req *gtpb.GreetRequest) (*gtpb.GreetResponse, error) {
+	//return &gtpb.GreetResponse{Message: "Hello again " + in.GetName()}, nil
+	firstname := req.GetGreeting().GetFirstName()
+	result := "Hello" + firstname
+
+	response := gtpb.GreetResponse{
+		Result: result,
+	}
+
+	return &response, nil
+}
+
 func main() {
 	fmt.Println("Hello World")
 	flag.Parse()
@@ -18,9 +37,11 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 	var opts []grpc.ServerOption
-	var server gtpb.GreetServiceServer
+	//var server gtpb.GreetServiceServer
+	//s := &server{}
 
 	grpcServer := grpc.NewServer(opts...)
-	gtpb.RegisterGreetServiceServer(grpcServer, server)
+	gtpb.RegisterGreetServiceServer(grpcServer, &server{})
 	grpcServer.Serve(lis)
+
 }
