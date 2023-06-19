@@ -1,0 +1,1 @@
+protoc --go-grpc_out=greet/greet_pb greet/greet_pb/greet.proto
