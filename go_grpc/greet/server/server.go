@@ -19,18 +19,20 @@ type server struct {
 
 func (*server) Greet(ctx context.Context, req *gtpb.GreetRequest) (*gtpb.GreetResponse, error) {
 	//return &gtpb.GreetResponse{Message: "Hello again " + in.GetName()}, nil
+	fmt.Printf("In server greet function invoked with %v", req)
 	firstname := req.GetGreeting().GetFirstName()
-	result := "Hello" + firstname
+	result := "Result: Hello " + firstname + "From server"
 
 	response := gtpb.GreetResponse{
 		Result: result,
 	}
 
+	// returning response back to client
 	return &response, nil
 }
 
 func main() {
-	fmt.Println("Hello World")
+	fmt.Println("Hello i am the Server")
 	flag.Parse()
 	lis, err := net.Listen("tcp", fmt.Sprintf("localhost:%d", 50051))
 	if err != nil {
@@ -41,7 +43,7 @@ func main() {
 	//s := &server{}
 
 	grpcServer := grpc.NewServer(opts...)
-	gtpb.RegisterGreetServiceServer(grpcServer, &server{})
+	gtpb.RegisterGreetServiceServer(grpcServer, &server{}) // service server
 	grpcServer.Serve(lis)
 
 }
