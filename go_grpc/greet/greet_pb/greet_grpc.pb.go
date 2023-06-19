@@ -4,7 +4,7 @@
 // - protoc             v4.23.3
 // source: greet/greet_pb/greet.proto
 
-package __
+package gtpb
 
 import (
 	grpc "google.golang.org/grpc"
