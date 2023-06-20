@@ -1,3 +1,6 @@
+// in protocol buffer here we are doing conversion to json , read from file , write to file (the binary )
+// we are not sending the message format through wire , for that we need grpc (which sends proto messages)
+
 package main
 
 import (
